@@ -1,4 +1,4 @@
-============= Overview ===============
+###Overview
 
 This application is designed to showcase a healthcare application ("HealthcareAI") built on top of HPE Private Cloud AI.
 
