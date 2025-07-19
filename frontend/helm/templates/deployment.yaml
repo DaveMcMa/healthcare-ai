@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+    {{- include "hpe-ezua.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        {{- include "hpe-ezua.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: triageai
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 7860
+        env:
+        # Model API configurations
+        - name: MEDREASON_URL
+          value: {{ .Values.models.medreason.url | quote }}
+        - name: MEDREASON_TOKEN
+          value: {{ .Values.models.medreason.token | quote }}
+        - name: WHISPER_URL
+          value: {{ .Values.models.whisper.url | quote }}
+        - name: WHISPER_TOKEN
+          value: {{ .Values.models.whisper.token | quote }}
+        - name: NLLB_URL
+          value: {{ .Values.models.nllb.url | quote }}
+        - name: NLLB_TOKEN
+          value: {{ .Values.models.nllb.token | quote }}
+        - name: MEDGEMMA_URL
+          value: {{ .Values.models.medgemma.url | quote }}
+        - name: MEDGEMMA_TOKEN
+          value: {{ .Values.models.medgemma.token | quote }}
+        # Database configurations
+        - name: DB_HOST
+          value: {{ .Values.database.host | quote }}
+        - name: DB_USER
+          value: {{ .Values.database.user | quote }}
+        - name: DB_PASSWORD
+          value: {{ .Values.database.password | quote }}
+        - name: DB_NAME
+          value: {{ .Values.database.name | quote }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}

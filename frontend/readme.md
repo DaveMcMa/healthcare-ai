@@ -1,0 +1,1 @@
+This folder contains the code for compiling the frontend docker image (only as reference, not necessary to deploy) as well as the pre-packaged helmchart you can import into your HPE Private Cloud AI AI Essentials interface.

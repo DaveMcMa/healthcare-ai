@@ -1,0 +1,28 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "nllb-translator"
+  namespace: "admin-f2faac6d"
+spec:
+  predictor:
+    containers:
+      - name: kserve-container
+        image: davemcmahon/nllb-translator:latest
+        env:
+          - name: TRANSFORMERS_CACHE
+            value: "/mnt/models/.cache"
+          - name: HF_HOME
+            value: "/mnt/models/.cache"
+        resources:
+          limits:
+            cpu: "4"
+            memory: "8Gi"
+          requests:
+            cpu: "1"
+            memory: "2Gi"
+        volumeMounts:
+        - mountPath: "/mnt/models"
+          name: model-storage
+    volumes:
+    - name: model-storage
+      emptyDir: {}
