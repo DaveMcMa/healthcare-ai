@@ -4,6 +4,8 @@
 
 This application is designed to showcase a healthcare application ("HealthcareAI") built on top of HPE Private Cloud AI.
 
+<img width="2984" height="1400" alt="image" src="https://github.com/user-attachments/assets/cbfbdfad-cf3b-4cca-a903-949b84babff7" />
+
 For the backend, deploy the 4 models below according to the instruction.
 
 Then deploy the frontend application by importing the framework found in the frontend folder. During the import process make sure to configure your serving endpoints either during import or later via the GUI by updating the values yaml via the user interface.
